@@ -5,6 +5,7 @@ from src.routes.transacciones import router as transacciones_router
 from src.routes.productos import router as productos_router
 from src.routes.proveedores import router as proveedores_router
 from src.routes.categorias import router as categorias_router
+from src.routes.usuarios import router as usuarios_router
 
 app = FastAPI(
     title="Sistema de Gestion de Inventario",
@@ -27,6 +28,7 @@ app.add_middleware(
 )
 
 
+app.include_router(usuarios_router)
 app.include_router(categorias_router)
 app.include_router(productos_router)
 app.include_router(proveedores_router)
