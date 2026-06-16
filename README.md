@@ -20,7 +20,7 @@ El proyecto sigue una estructura **Modular por Capas** para separar la lógica d
 
 ```text
 mi_proyecto_inventario/
-├── app/
+├── src/
 │   ├── config/       # Configuración y cliente de Supabase
 │   ├── routes/       # Endpoints de la API
 │   ├── schemas/      # Validadores de entrada/salida
