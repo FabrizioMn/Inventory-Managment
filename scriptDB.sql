@@ -27,7 +27,7 @@ CREATE TABLE producto (
     descripcion TEXT,
     precio DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
-    categoria_id INT REFERENCES categoria(id_categoria) ON DELETE SET NULL,
+    id_categoria INT REFERENCES categoria(id_categoria) ON DELETE SET NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -44,14 +44,14 @@ CREATE TABLE abastecimiento (
 CREATE TABLE venta (
     id_venta SERIAL PRIMARY KEY,
     total DECIMAL(10, 2) DEFAULT 0,
-    usuario_id INT REFERENCES usuario(id_usuario) ON DELETE RESTRICT,
+    id_usuario INT REFERENCES usuario(id_usuario) ON DELETE RESTRICT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE detalle_venta (
     id_detalle_venta SERIAL PRIMARY KEY,
-    venta_id INT REFERENCES venta(id_venta) ON DELETE CASCADE,
-    producto_id INT REFERENCES producto(id_producto) ON DELETE RESTRICT,
+    id_venta INT REFERENCES venta(id_venta) ON DELETE CASCADE,
+    id_venta INT REFERENCES producto(id_producto) ON DELETE RESTRICT,
     cantidad INT NOT NULL,
     precio_unitario DECIMAL(10, 2) NOT NULL
 );

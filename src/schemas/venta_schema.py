@@ -4,7 +4,7 @@ from datetime import datetime
 
 #------- Detalle de Venta -------
 class DetalleVentaBase(BaseModel):
-    producto_id: int = Field(..., description="ID del producto")
+    id_producto: int = Field(..., description="ID del producto")
     cantidad: int = Field(..., gt=0, description="Cantidad vendida")
     precio_unitario: float = Field(..., gt=0, description="Precio de venta")
 
@@ -13,14 +13,14 @@ class DetalleVentaCreate(DetalleVentaBase):
 
 class DetalleVentaResponse(DetalleVentaBase):
     id_detalle_venta: int
-    venta_id: int
+    id_venta: int
 
     class Config:
         from_attributes = True
 
 #------- Venta -------
 class VentaBase(BaseModel):
-    usuario_id: int = Field(..., description="ID del usuario que realiza la venta")
+    id_usuario: int = Field(..., description="ID del usuario que realiza la venta")
 
 class VentaCreate(VentaBase):
     productos: List[DetalleVentaCreate] = Field(..., min_items=1, description="Lista de productos")

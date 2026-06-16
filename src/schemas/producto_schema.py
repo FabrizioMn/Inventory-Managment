@@ -7,7 +7,7 @@ class ProductoBase(BaseModel):
     nombre: str = Field(..., min_length=2, max_length=150, description="Nombre del producto")
     descripcion: Optional[str] = Field(None, description="Detalles del producto")
     precio: float = Field(..., gt=0, description="Precio de venta al público")
-    categoria_id: Optional[int] = Field(None, description="ID de la categoría a la que pertenece")
+    id_categoria: Optional[int] = Field(None, description="ID de la categoría a la que pertenece")
 
 class ProductoCreate(ProductoBase):
     stock: Optional[int] = Field(0, ge=0)
@@ -17,7 +17,7 @@ class ProductoUpdate(BaseModel):
     nombre: Optional[str] = Field(None, min_length=2, max_length=150)
     descripcion: Optional[str] = None
     precio: Optional[float] = Field(None, gt=0)
-    categoria_id: Optional[int] = None
+    id_categoria: Optional[int] = None
 
 class ProductoResponse(ProductoBase):
     id_producto: int
