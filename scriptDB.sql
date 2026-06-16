@@ -51,7 +51,7 @@ CREATE TABLE venta (
 CREATE TABLE detalle_venta (
     id_detalle_venta SERIAL PRIMARY KEY,
     id_venta INT REFERENCES venta(id_venta) ON DELETE CASCADE,
-    id_venta INT REFERENCES producto(id_producto) ON DELETE RESTRICT,
+    id_producto INT REFERENCES producto(id_producto) ON DELETE RESTRICT,
     cantidad INT NOT NULL,
     precio_unitario DECIMAL(10, 2) NOT NULL
 );

@@ -1,6 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from src.routes.transacciones import router as transacciones_router
+from src.routes.productos import router as productos_router
+from src.routes.proveedores import router as proveedores_router
+from src.routes.categorias import router as categorias_router
 
 app = FastAPI(
     title="Sistema de Gestion de Inventario",
@@ -21,6 +25,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+
+app.include_router(categorias_router)
+app.include_router(productos_router)
+app.include_router(proveedores_router)
+app.include_router(transacciones_router)
+
+
 
 @app.get("/",tags=["Root"])
 def read_root():
