@@ -56,7 +56,7 @@ class InventarioService:
         productos_verificados=[]
         
         for item in venta.productos:
-            prod_resp=supabase.table("producto").select("id_producto","stock","nombre").eq("id_producto",item.id_producto).execute
+            prod_resp=supabase.table("producto").select("id_producto","stock","nombre").eq("id_producto",item.id_producto).execute()
             if not prod_resp.data:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
