@@ -13,7 +13,7 @@ class ProductoService:
                 detail=f"El SKU '{producto.sku}' ya esta registrado en el sistema"
             )
         
-        if producto.categoria_id:
+        if producto.id_categoria:
             cat_existente = supabase.table("categoria").select("id_categoria").eq("id_categoria", producto.id_categoria).execute()
             if not cat_existente.data:
                 raise HTTPException(
