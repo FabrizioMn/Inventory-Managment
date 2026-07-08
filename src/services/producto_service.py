@@ -12,6 +12,13 @@ class ProductoService:
                 status_code=status.HTTP_400_BAD_REQUEST, 
                 detail=f"El SKU '{producto.sku}' ya esta registrado en el sistema"
             )
+
+        nombre_existente = supabase.table("producto").select("id_producto").ilike("nombre", producto.nombre.strip()).execute()
+        if nombre_existente.data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, 
+                detail=f"Ya existe un producto registrado con el nombre '{producto.nombre}'"
+            )
         
         if producto.id_categoria:
             cat_existente = supabase.table("categoria").select("id_categoria").eq("id_categoria", producto.id_categoria).execute()
