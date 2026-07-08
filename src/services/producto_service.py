@@ -47,3 +47,22 @@ class ProductoService:
         if not response.data:
             raise HTTPException(status_code=404, detail=f"No se encontro ningun producto con el SKU {sku}")
         return response.data[0]
+    
+    @staticmethod
+    def eliminar_producto(id_producto: int):
+        producto_existente = supabase.table("producto").select("id_producto").eq("id_producto", id_producto).execute()
+        if not producto_existente.data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"El producto con ID {id_producto} no existe"
+            )
+        
+        response = supabase.table("producto").delete().eq("id_producto", id_producto).execute()
+        
+        if not response.data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, 
+                detail="No se pudo eliminar el producto"
+            )
+            
+        return {"message": f"Producto con ID {id_producto} eliminado exitosamente"}
