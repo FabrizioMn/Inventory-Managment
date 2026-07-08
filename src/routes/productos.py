@@ -23,3 +23,7 @@ def obtener_producto_por_id(id_producto: int):
 @router.get("/sku/{sku}", response_model=ProductoResponse)
 def obtener_producto_por_sku(sku: str):
     return ProductoService.obtener_producto_por_sku(sku)
+
+@router.delete("/{id_producto}", status_code=status.HTTP_200_OK)
+def eliminar_producto(id_producto: int):
+    return ProductoService.eliminar_producto(id_producto)
