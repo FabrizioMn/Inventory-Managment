@@ -6,14 +6,23 @@ class ProveedorService:
 
     @staticmethod
     def crear_proveedor(proveedor: ProveedorCreate):
-        ruc_existente = supabase.table("proveedor").select("id_proveedor").eq("ruc", proveedor.ruc).execute()
+        ruc_existente = supabase.table("proveedor").select("id_proveedor").eq("ruc", proveedor.ruc.strip()).execute()
         if ruc_existente.data:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"El proveedor con RUC '{proveedor.ruc}' ya se encuentra registrado"
             )
 
+        razon_existente = supabase.table("proveedor").select("id_proveedor").ilike("razon_social", proveedor.razon_social.strip()).execute()
+        if razon_existente.data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"La Razón Social '{proveedor.razon_social}' ya está registrada"
+            )
+
         data = proveedor.model_dump()
+        data["ruc"] = data["ruc"].strip()
+        data["razon_social"] = data["razon_social"].strip()
         response = supabase.table("proveedor").insert(data).execute()
 
         if not response.data:
