@@ -6,7 +6,7 @@ class ProductoService:
 
     @staticmethod
     def crear_producto(producto: ProductoCreate):
-        sku_existente = supabase.table("producto").select("id_producto").eq("sku", producto.sku).execute()
+        sku_existente = supabase.table("producto").select("id_producto").eq("sku", producto.sku.strip()).execute()
         if sku_existente.data:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST, 
@@ -29,6 +29,8 @@ class ProductoService:
                 )
 
         data = producto.model_dump()
+        data["sku"] = data["sku"].strip()
+        data["nombre"] = data["nombre"].strip()
         response = supabase.table("producto").insert(data).execute()
         
         if not response.data:
