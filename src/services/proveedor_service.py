@@ -34,10 +34,3 @@ class ProveedorService:
     def obtener_proveedores():
         response = supabase.table("proveedor").select("*").execute()
         return response.data
-
-    @staticmethod
-    def obtener_proveedor_por_id(id_proveedor: int):
-        response = supabase.table("proveedor").select("*").eq("id_proveedor", id_proveedor).execute()
-        if not response.data:
-            raise HTTPException(status_code=404, detail="Proveedor no encontrado")
-        return response.data[0]

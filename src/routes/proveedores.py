@@ -15,7 +15,3 @@ def crear_proveedor(proveedor: ProveedorCreate):
 @router.get("/", response_model=List[ProveedorResponse])
 def listar_proveedores():
     return ProveedorService.obtener_proveedores()
-
-@router.get("/{id_proveedor}", response_model=ProveedorResponse)
-def obtener_proveedor(id_proveedor: int):
-    return ProveedorService.obtener_proveedor_por_id(id_proveedor)
