@@ -44,20 +44,6 @@ class ProductoService:
         return response.data
 
     @staticmethod
-    def obtener_producto_por_id(id_producto: int):
-        response = supabase.table("producto").select("*").eq("id_producto", id_producto).execute()
-        if not response.data:
-            raise HTTPException(status_code=404, detail="Producto no encontrado")
-        return response.data[0]
-
-    @staticmethod
-    def obtener_producto_por_sku(sku: str):
-        response = supabase.table("producto").select("*").eq("sku", sku).execute()
-        if not response.data:
-            raise HTTPException(status_code=404, detail=f"No se encontro ningun producto con el SKU {sku}")
-        return response.data[0]
-    
-    @staticmethod
     def eliminar_producto(id_producto: int):
         producto_existente = supabase.table("producto").select("id_producto").eq("id_producto", id_producto).execute()
         if not producto_existente.data:
