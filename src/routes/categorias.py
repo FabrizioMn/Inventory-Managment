@@ -15,7 +15,3 @@ def crear_categoria(categoria: CategoriaCreate):
 @router.get("/", response_model=List[CategoriaResponse])
 def listar_categorias():
     return CategoriaService.obtener_categorias()
-
-@router.get("/{id_categoria}", response_model=CategoriaResponse)
-def obtener_categoria(id_categoria: int):
-    return CategoriaService.obtener_categoria_por_id(id_categoria)
