@@ -16,6 +16,11 @@ def crear_producto(producto: ProductoCreate):
 def listar_productos():
     return ProductoService.obtener_productos()
 
+
+@router.put("/{id_producto}", status_code=status.HTTP_200_OK)
+def actualizar_producto(id_producto: int, producto: ProductoCreate):
+    return ProductoService.actualizar_producto(id_producto, producto)
+
 @router.delete("/{id_producto}", status_code=status.HTTP_200_OK)
 def eliminar_producto(id_producto: int):
     return ProductoService.eliminar_producto(id_producto)

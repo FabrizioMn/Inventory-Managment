@@ -44,6 +44,22 @@ class ProductoService:
         return response.data
 
     @staticmethod
+    def actualizar_producto(id_producto: int, producto: ProductoCreate):
+        data = producto.model_dump()
+        data["sku"] = data["sku"].strip()
+        data["nombre"] = data["nombre"].strip()
+        
+        response = supabase.table("producto").update(data).eq("id_producto", id_producto).execute()
+        
+        if not response.data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST, 
+                detail="No se pudo actualizar el producto. Verifique si el ID existe o si hay datos duplicados"
+            )
+            
+        return response.data[0]
+
+    @staticmethod
     def eliminar_producto(id_producto: int):
         producto_existente = supabase.table("producto").select("id_producto").eq("id_producto", id_producto).execute()
         if not producto_existente.data:

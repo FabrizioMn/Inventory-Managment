@@ -47,7 +47,7 @@ class InventarioService:
 
     @staticmethod
     def obtener_historial_abastecimientos():
-        response = supabase.table("abastecimiento").select("*").order("created_at", descending=True).execute()
+        response = supabase.table("abastecimiento").select("*").order("created_at", desc=True).execute()
         return response.data
     
     @staticmethod
@@ -118,5 +118,5 @@ class InventarioService:
           
     @staticmethod
     def obtener_historial_ventas():
-        response= supabase.table("venta").select("*").order("created_at",descending=True).execute()
+        response= supabase.table("venta").select("*").order("id_venta",desc=True).execute()
         return response.data
