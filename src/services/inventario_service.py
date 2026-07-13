@@ -118,5 +118,10 @@ class InventarioService:
           
     @staticmethod
     def obtener_historial_ventas():
-        response= supabase.table("venta").select("*").order("id_venta",desc=True).execute()
+        response= (
+            supabase.table("venta")
+            .select("*,productos:detalle_venta(*)")
+            .order("id_venta",desc=True)
+            .execute()
+        )
         return response.data
