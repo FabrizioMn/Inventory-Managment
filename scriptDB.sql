@@ -2,6 +2,7 @@ CREATE TABLE categoria (
     id_categoria SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
+    activo BOOLEAN DEFAULT TRUE NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -17,6 +18,7 @@ CREATE TABLE proveedor (
     ruc VARCHAR(20) UNIQUE NOT NULL,
     razon_social VARCHAR(150) NOT NULL,
     telefono VARCHAR(20),
+    activo BOOLEAN DEFAULT TRUE NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -28,6 +30,7 @@ CREATE TABLE producto (
     precio DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
     id_categoria INT REFERENCES categoria(id_categoria) ON DELETE SET NULL,
+    activo BOOLEAN DEFAULT TRUE NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -37,7 +40,7 @@ CREATE TABLE abastecimiento (
     precio_compra DECIMAL(10, 2) NOT NULL,
     id_proveedor INT REFERENCES proveedor(id_proveedor) ON DELETE RESTRICT,
     id_usuario INT REFERENCES usuario(id_usuario) ON DELETE RESTRICT,
-    id_producto INT REFERENCES producto(id_producto) ON DELETE CASCADE,
+    id_producto INT REFERENCES producto(id_producto) ON DELETE RESTRICT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
