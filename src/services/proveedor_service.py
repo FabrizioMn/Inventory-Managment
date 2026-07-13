@@ -23,6 +23,7 @@ class ProveedorService:
         data = proveedor.model_dump()
         data["ruc"] = data["ruc"].strip()
         data["razon_social"] = data["razon_social"].strip()
+        data["activo"] = True
         response = supabase.table("proveedor").insert(data).execute()
 
         if not response.data:
@@ -31,6 +32,18 @@ class ProveedorService:
         return response.data[0]
 
     @staticmethod
-    def obtener_proveedores():
-        response = supabase.table("proveedor").select("*").execute()
+    def obtener_proveedores_activos():
+        response = supabase.table("proveedor").select("*").eq("activo", True).order("id_proveedor").execute()
         return response.data
+
+    @staticmethod
+    def obtener_proveedores_general():
+        response = supabase.table("proveedor").select("*").order("id_proveedor").execute()
+        return response.data
+    
+    @staticmethod
+    def desactivar_proveedor(id_proveedor: int):
+        response = supabase.table("proveedor").update({"activo": False}).eq("id_proveedor", id_proveedor).execute()
+        if not response.data:
+            raise HTTPException(status_code=400, detail="No se pudo desactivar el proveedor")
+        return {"message": f"Proveedor con ID {id_proveedor} desactivado exitosamente"}

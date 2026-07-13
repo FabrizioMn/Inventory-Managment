@@ -8,6 +8,7 @@ class ProductoBase(BaseModel):
     descripcion: Optional[str] = Field(None, description="Detalles del producto")
     precio: float = Field(..., gt=0, description="Precio de venta al público")
     id_categoria: Optional[int] = Field(None, description="ID de la categoría a la que pertenece")
+    activo: Optional[bool] = Field(True, description="Estado del producto para Soft Delete")
 
 class ProductoCreate(ProductoBase):
     stock: Optional[int] = Field(0, ge=0)
@@ -18,10 +19,12 @@ class ProductoUpdate(BaseModel):
     descripcion: Optional[str] = None
     precio: Optional[float] = Field(None, gt=0)
     id_categoria: Optional[int] = None
+    activo: Optional[bool] = None
 
 class ProductoResponse(ProductoBase):
     id_producto: int
     stock: int
+    activo: bool
     created_at: datetime
 
     class Config:

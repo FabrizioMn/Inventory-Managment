@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Query, status
 from typing import List
 from src.schemas.categoria_schema import CategoriaCreate, CategoriaResponse
 from src.services.categoria_service import CategoriaService
@@ -13,5 +13,11 @@ def crear_categoria(categoria: CategoriaCreate):
     return CategoriaService.crear_categoria(categoria)
 
 @router.get("/", response_model=List[CategoriaResponse])
-def listar_categorias():
-    return CategoriaService.obtener_categorias()
+def listar_categorias(solo_activos: bool = Query(default=True, description="Filtrar solo categorías activas")):
+    if solo_activos:
+        return CategoriaService.obtener_categorias_activos()
+    return CategoriaService.obtener_categorias_general()
+
+@router.delete("/{id_categoria}")
+def desactivar_categoria(id_categoria: int):
+    return CategoriaService.desactivar_categoria(id_categoria)
