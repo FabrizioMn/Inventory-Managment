@@ -1,11 +1,13 @@
-from fastapi import APIRouter, status, Query
+from fastapi import APIRouter, status, Query,Depends
 from typing import List
 from src.schemas.producto_schema import ProductoCreate, ProductoResponse,ProductoUpdate
 from src.services.producto_service import ProductoService
+from src.routes.usuarios import obtener_usuario_actual
 
 router = APIRouter(
     prefix="/productos",
-    tags=["Productos"]
+    tags=["Productos"],
+    dependencies=[Depends(obtener_usuario_actual)]
 )
 
 @router.post("/", response_model=ProductoResponse, status_code=status.HTTP_201_CREATED)

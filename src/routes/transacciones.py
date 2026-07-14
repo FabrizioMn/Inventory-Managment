@@ -1,12 +1,14 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status,Depends
 from typing import List
 from src.schemas.abastecimiento_schema import AbastecimientoCreate, AbastecimientoResponse
 from src.schemas.venta_schema import VentaCreate,VentaResponse
 from src.services.inventario_service import InventarioService
+from src.routes.usuarios import obtener_usuario_actual
 
 router = APIRouter(
     prefix="/transacciones",
-    tags=["Transacciones Inventario"]
+    tags=["Transacciones Inventario"],
+    dependencies=[Depends(obtener_usuario_actual)]
 )
 
 @router.post("/abastecer", response_model=AbastecimientoResponse, status_code=status.HTTP_201_CREATED)

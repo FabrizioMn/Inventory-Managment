@@ -1,11 +1,13 @@
-from fastapi import APIRouter, Query, status
+from fastapi import APIRouter, Query, status,Depends
 from typing import List
 from src.schemas.categoria_schema import CategoriaCreate, CategoriaResponse
 from src.services.categoria_service import CategoriaService
+from src.routes.usuarios import obtener_usuario_actual
 
 router = APIRouter(
     prefix="/categorias",
-    tags=["Categorías"]
+    tags=["Categorías"],
+    dependencies=[Depends(obtener_usuario_actual)]
 )
 
 @router.post("/", response_model=CategoriaResponse, status_code=status.HTTP_201_CREATED)
